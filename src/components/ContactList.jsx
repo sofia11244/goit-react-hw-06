@@ -10,7 +10,7 @@ const ContactList = () => {
 
     // Silme fonksiyonu belki delete işe yaramz
     const handleDelete = (id) => {
-        dispatch(deleteContact(id)); // Redux eylemi ile kişi silme
+        dispatch(deleteContact(id)); 
     };
 
     return (
@@ -21,7 +21,7 @@ const ContactList = () => {
                     id={id}
                     name={name}
                     number={number}
-                    onDelete={handleDelete} // onDelete fonksiyonunu geçir
+                    onDelete={handleDelete} 
                 />
             ))}
         </ul>

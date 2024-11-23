@@ -12,7 +12,7 @@ const contactsSlice = createSlice({
     searchValue: "", // Arama değeri
   },
   reducers: {
-    addContact(state, action) {
+    addContact(state, action) { 
       state.items.push(action.payload);
     },
     deleteContact(state, action) {

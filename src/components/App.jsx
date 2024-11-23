@@ -4,17 +4,22 @@ import SearchBox from './SearchBox.jsx';
 import ContactList from './ContactList.jsx';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact, deleteContact } from '../redux/contactsSlice'; // Redux eylemleri
+import { addContact, deleteContact, updateSearchValue } from '../redux/contactsSlice'; // Redux eylemleri
 
 import { useState } from 'react';
 
 function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items); // Redux store'dan `contacts` alın
-  const [searchValue, setSearchValue] = useState("");
+  const contacts = useSelector((state) => state.contacts.items);
+  const searchValue = useSelector((state) => state.contacts.searchValue);
+  const [searchInput, setSearchInput] = useState("");
+
+  const handleSearch = () => {
+    dispatch(updateSearchValue(searchInput));
+  };
 
   const handleSearchChange = (evt) => {
-    setSearchValue(evt.target.value);
+    setSearchInput(evt.target.value);
   };
 
   const filteredContacts = contacts.filter((contact) =>
@@ -22,19 +27,24 @@ function App() {
   );
 
   const handleAddContact = (newContact) => {
-    dispatch(addContact(newContact)); // Redux eylemini tetikle
+    dispatch(addContact(newContact));
   };
 
   const handleDeleteContact = (contactId) => {
-    dispatch(deleteContact(contactId)); // Redux eylemini tetikle
+    dispatch(deleteContact(contactId));
   };
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm onAddContact={handleAddContact} /> {/* Redux'a bağlandı */}
-      <SearchBox inputValue={searchValue} handleChange={handleSearchChange} />
-      <ContactList contacts={filteredContacts} onDelete={handleDeleteContact} /> {/* Redux'a bağlandı */}
+      <ContactForm onAddContact={handleAddContact} />
+      <SearchBox
+        inputValue={searchInput}
+        handleChange={handleSearchChange}
+        onSearch={handleSearch}
+      />
+      <button onClick={handleSearch}>Ara</button>
+      <ContactList contacts={filteredContacts} onDelete={handleDeleteContact} />
     </div>
   );
 }
