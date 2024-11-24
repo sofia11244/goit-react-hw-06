@@ -20,9 +20,6 @@ const contactsSlice = createSlice({
         (contact) => contact.id !== action.payload
       );
     },
-    updateSearchValue(state, action) {
-      state.searchValue = action.payload; // Arama değeri güncelleniyor
-    },
   },
 });
 

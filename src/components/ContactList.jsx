@@ -6,7 +6,12 @@ import { deleteContact } from "../redux/contactsSlice"; // contactsSlice'tan eyl
 
 const ContactList = () => {
     const dispatch = useDispatch();
-    const contacts = useSelector(state => state.contacts.items); // Kişileri seç
+    const contacts = useSelector(state => state.contacts.items);
+    const nameFilter = useSelector(state => state.filters.nameFilter);
+
+    const filteredContacts =contacts.filter(contact => 
+        contact.name.toLowerCase().includes(nameFilter.toLowerCase())
+    );
 
     // Silme fonksiyonu belki delete işe yaramz
     const handleDelete = (id) => {
@@ -15,7 +20,7 @@ const ContactList = () => {
 
     return (
         <ul className={styles.list}>
-            {contacts.map(({ id, name, number }) => (
+            {filteredContacts.map(({ id, name, number }) => (
                 <ContactListItem
                     key={id}
                     id={id}
@@ -34,8 +39,7 @@ ContactList.propTypes = {
             name: PropTypes.string.isRequired,
             number: PropTypes.string.isRequired,
         })
-    ).isRequired,
-    onDelete: PropTypes.func.isRequired,
+    ),
+    onDelete: PropTypes.func,
 };
-
 export default ContactList;
