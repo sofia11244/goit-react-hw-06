@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import ContactListItem from './ContactListItem.jsx';
 import styles from './component.module.css';
 import { useSelector, useDispatch } from "react-redux";
@@ -20,26 +19,17 @@ const ContactList = () => {
 
     return (
         <ul className={styles.list}>
-            {filteredContacts.map(({ id, name, number }) => (
+            {filteredContacts.map((contact) => (
                 <ContactListItem
-                    key={id}
-                    id={id}
-                    name={name}
-                    number={number}
-                    onDelete={handleDelete} 
-                />
+                key={contact.id}
+                id={contact.id}
+                name={contact.name}
+                number={contact.number}
+                onDelete={handleDelete}
+              />
             ))}
         </ul>
     );
 };
-ContactList.propTypes = {
-    contacts: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            number: PropTypes.string.isRequired,
-        })
-    ),
-    onDelete: PropTypes.func,
-};
+
 export default ContactList;
